@@ -6,7 +6,7 @@
 
 
 
-  <title>Single-Codec</title>
+  <title>Single-Codec2</title>
   <meta name="generator" content="Jekyll v3.9.0">
   <meta property="og:title" content="Single-Codec">
   <meta property="og:locale" content="en_US">
@@ -28,30 +28,29 @@
 
   <section class="main-content">
     <h1 id="">
-      <center>Single-Codec: Single-Codebook Speech Codec towards High-Performance Speech Generation</center>
+      <center>Single-Codec2:Re-CodeBook enhanced Single-Codebook Speech Codec for low-rate and high-quality speech generation</center>
     </h1>
 
-    <center> Hanzhao Li<sup>1</sup>, Liumeng Xue<sup>2</sup>, Haohan Guo<sup>3</sup>, Xinfa Zhu<sup>1</sup>, Yuanjun Lv<sup>1</sup>,  Lei Xie<sup>1</sup> </center>
-    <center>  Yunlin Chen<sup>4</sup>,  Hao Yin<sup>4</sup>,  Zhifei Li<sup>4</sup> </center>
+    <center> Jingbin Hu<sup>1</sup>, Liumeng Xue<sup>2</sup>, Wenhao Li<sup>1</sup>, Hanzhao Li<sup>1</sup>, Ziyu Zhang<sup>1</sup>, Kangxiang Xia<sup>1</sup> </center>
+    <center>  Dake Guo<sup>1</sup>, Lei Xie<sup>1</sup>, Qiang Zhang<sup>3</sup>, Haoyue Zhan<sup>3</sup>, Pengyuan Xie<sup>3</sup> </center>
 
     <p></p>
       
     <center> <sup>1</sup>Audio, Speech and Language Processing Group (ASLP@NPU), School of Computer Science, Northwestern Polytechnical University, Xi'an, China<br /></center>
-    <center> <sup>2</sup>School of Data Science, The Chinese University of Hong Kong, Shenzhen (CUHK-Shenzhen), China</center>
-    <center> <sup>3</sup>The Chinese University of Hong Kong, Hong Kong SAR, China</center>
-    <center> <sup>4</sup>Shanghai Mobvoi Information Technology Co., Ltd</center>
+    <center> <sup>2</sup>Hong Kong University of Science and Technology, Hong Kong SAR, China</center>
+    <center> <sup>3</sup>Guangzhou Quwan Network Technology, Guangzhou, China</center>
 
     <h2>0. Contents</h2>
     <ol>
       <li><a href="#abstract">Abstract</a></li>
       <li><a href="#Ablation">Samples on Audio Reconstruction: Ablation Study </a></li>
       <li><a href="#Reconstruction">Samples on Audio Reconstruction: Comparison Study </a></li>
-      <li><a href="#TTS">Audio Samples: VALL-E Zero-shot TTS based on differenct codecs </a></li>
+      <li><a href="#TTS">Audio Samples: Zero-shot TTS based on differenct codecs </a></li>
     </ol>
 
     <br><br>
     <h2 id="abstract">1. Abstract<a name="abstract"></a></h2>
-    <p> The multi-codebook speech codec enables the application of large language models (LLM) in TTS but bottlenecks efficiency and robustness due to multi-sequence prediction. To avoid this obstacle, we propose Single-Codec, a single-codebook single-sequence codec, which employs a disentangled VQ-VAE to decouple speech into a time-invariant embedding and a phonetically-rich discrete sequence. Furthermore, the encoder is enhanced with 1) contextual modeling with a BLSTM module to exploit the temporal information, 2) a hybrid sampling module to alleviate distortion from upsampling and downsampling, and 3) a resampling module to encourage discrete units to carry more phonetic information. Compared with multi-codebook codecs, e.g., EnCodec and TiCodec, Single-Codec demonstrates higher reconstruction quality with a lower bandwidth of only 304bps. The effectiveness of Single-Code is further validated by LLM-TTS experiments, showing improved naturalness and intelligibility.
+    <p> Recent advances in large language model (LLM)-based text-to-speech (TTS) systems leverage speech tokenization to discretize continuous speech, enabling LLM paradigms for speech modeling.Ideal tokens require low frame rates and semantic richness, yet compressing rich acoustic information such as phonetics, prosody, and speaker characteristics into low-frame-rate tokens remains challenging. Current single-codebook codecs use speaker timbre decoupling or semantic distillation but suffer from poor acoustic-semantic balance and reconstruction quality. Quantization issues like codebook collapse and high quantization loss further hinder performance. To address these challenges, we propose Single-Codec 2, a two-stage single-codebook codec. In the unified modeling stage, we introduce Index Backpropagation Quantization (IBQ) to reduce quantization loss and implement a dual-decoder architecture to learn a unified codebook. In the acoustic reconstruction stage, we map this unified codebook to an acoustic codebook via a novel re-codebook module, balancing semantic modeling and high-fidelity reconstruction. Moreover, a DiT-based decoder further enhances performance.Experiments demonstrate that Single-Codec 2 achieves superior performances in both speech reconstruction and TTS tasks even in 12.5 Hz frame rate and 162.5 bps bandwidth.
     </p>
 
     <!-- <br><br> -->
@@ -118,7 +117,7 @@
         </table>
         
 
-      <h2 id="TTS">4. Audio Samples: VALL-E Zero-shot TTS based on different codecs <a name="TTS"></a></h2>
+      <h2 id="TTS">4. Audio Samples:Zero-shot TTS based on different codecs <a name="TTS"></a></h2>
 
       <table>
         <tr>
