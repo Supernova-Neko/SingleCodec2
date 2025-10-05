@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+
+  <title>Single-Codec2</title>
+  <meta name="generator" content="Jekyll v3.9.0">
+  <meta property="og:title" content="Single-Codec">
+  <meta property="og:locale" content="en_US">
+
+  <meta name="twitter:card" content="summary">
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#157878">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-new-gr-c-s-check-loaded="14.1001.0" data-gr-ext-installed="">
+  <section class="page-header">
+
+
+
+  </section>
+
+  <section class="main-content">
+    <h1 id="">
+    <center>Single-Codec2:Re-CodeBook enhanced Single-Codebook Speech Codec for Low-Rate and High-Quality Speech Generation</center>
+    </h1>
+
+    <center> Jingbin Hu<sup>1</sup>, Liumeng Xue<sup>2</sup>, Wenhao Li<sup>1</sup>, Hanzhao Li<sup>1</sup>, Ziyu Zhang<sup>1</sup>, Kangxiang Xia<sup>1</sup> </center>
+    <center>  Dake Guo<sup>1</sup>, Lei Xie<sup>1</sup>, Qiang Zhang<sup>3</sup>, Haoyue Zhan<sup>3</sup>, Pengyuan Xie<sup>3</sup> </center>
+
+    <p></p>
+      
+    <center> <sup>1</sup>Audio, Speech and Language Processing Group (ASLP@NPU), School of Computer Science, Northwestern Polytechnical University, Xi'an, China<br /></center>
+    <center> <sup>2</sup>Hong Kong University of Science and Technology, Hong Kong SAR, China</center>
+    <center> <sup>3</sup>Guangzhou Quwan Network Technology, Guangzhou, China</center>
+
+    <h2>0. Contents</h2>
+    <ol>
+      <li><a href="#abstract">Abstract</a></li>
+      <li><a href="#Ablation">Samples on Audio Reconstruction: Ablation Study </a></li>
+      <li><a href="#Reconstruction">Samples on Audio Reconstruction: Comparison Study </a></li>
+      <li><a href="#TTS">Audio Samples: Zero-shot TTS based on differenct codecs </a></li>
+    </ol>
+
+    <br><br>
+    <h2 id="abstract">1. Abstract<a name="abstract"></a></h2>
+    <p> Recent advances in large language model (LLM)-based text-to-speech (TTS) systems leverage speech tokenization to discretize continuous speech, enabling LLM paradigms for speech modeling.Ideal tokens require low frame rates and semantic richness, yet compressing rich acoustic information such as phonetics, prosody, and speaker characteristics into low-frame-rate tokens remains challenging. Current single-codebook codecs use speaker timbre decoupling or semantic distillation but suffer from poor acoustic-semantic balance and reconstruction quality. Quantization issues like codebook collapse and high quantization loss further hinder performance. To address these challenges, we propose Single-Codec 2, a two-stage single-codebook codec. In the unified modeling stage, we introduce Index Backpropagation Quantization (IBQ) to reduce quantization loss and implement a dual-decoder architecture to learn a unified codebook. In the acoustic reconstruction stage, we map this unified codebook to an acoustic codebook via a novel re-codebook module, balancing semantic modeling and high-fidelity reconstruction. Moreover, a DiT-based decoder further enhances performance.Experiments demonstrate that Single-Codec 2 achieves superior performances in both speech reconstruction and TTS tasks even in 12.5 Hz frame rate and 162.5 bps bandwidth.
+    </p>
+
+    <!-- <br><br> -->
+
+    <center><img src='fig/model2.png' style="width: auto;height: auto;max-width: 70%;"></center>
+    <div align="center"><b>Fig.1</b> The architecture of Single-Codec2.</div>
+
+    <!-- <br><br> -->
+
+    <h2 id="Ablation">2. Samples on Audio Reconstruction: Ablation Study <a name="Ablation"></a></h2>
+      <table>
+        <tr>
+          <th>GT</th><th>Single-Codec2 25Hz</th><th>Single-Codec2 12.5Hz</th><th>wo. Re-codebook</th><th>w. VQ</th><th>w. FSQ</th><th>w. BLSTM</th></tr>
+        <tr>
+          <td><audio controls><source src="demos/codec2_GT/celeb_zh_yuchengdong.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_25hz/celeb_zh_yuchengdong.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_12_5hz/celeb_zh_yuchengdong.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_recodebook/celeb_zh_yuchengdong.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_vq/celeb_zh_yuchengdong.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_fsq/celeb_zh_yuchengdong.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_blstm/celeb_zh_yuchengdong.wav" type="audio/wav"></audio></td></tr>
+          <tr>
+          <td><audio controls><source src="demos/codec2_GT/celeb_zh_luoyonghao_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_25hz/celeb_zh_luoyonghao_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_12_5hz/celeb_zh_luoyonghao_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_recodebook/celeb_zh_luoyonghao_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_vq/celeb_zh_luoyonghao_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_fsq/celeb_zh_luoyonghao_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_blstm/celeb_zh_luoyonghao_2.wav" type="audio/wav"></audio></td></tr>
+          <tr>
+          <td><audio controls><source src="demos/codec2_GT/celeb_en_jobs_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_25hz/celeb_en_jobs_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_12_5hz/celeb_en_jobs_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_recodebook/celeb_en_jobs_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_vq/celeb_en_jobs_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_fsq/celeb_en_jobs_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_blstm/celeb_en_jobs_2.wav" type="audio/wav"></audio></td></tr>
+          <tr>
+          <td><audio controls><source src="demos/codec2_GT/acg_zh_houyi.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_25hz/acg_zh_houyi.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_12_5hz/acg_zh_houyi.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_recodebook/acg_zh_houyi.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_vq/acg_zh_houyi.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_fsq/acg_zh_houyi.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_blstm/acg_zh_houyi.wav" type="audio/wav"></audio></td></tr>
+          <tr>
+          <td><audio controls><source src="demos/codec2_GT/dialet_sh_male.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_25hz/dialet_sh_male.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_12_5hz/dialet_sh_male.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_recodebook/dialet_sh_male.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_vq/dialet_sh_male.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_fsq/dialet_sh_male.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_blstm/dialet_sh_male.wav" type="audio/wav"></audio></td></tr>
+          <tr>
+          <td><audio controls><source src="demos/codec2_GT/en_child_1.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_25hz/en_child_1.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_12_5hz/en_child_1.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_recodebook/en_child_1.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_vq/en_child_1.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_fsq/en_child_1.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_blstm/en_child_1.wav" type="audio/wav"></audio></td></tr>
+        <tr>
+      </table>
+        
+    <h2 id="Reconstruction">3. Samples on Audio Reconstruction: Comparison Study <a name="Reconstruction"></a></h2>
+      <table>
+        <tr>
+        <th>GT</th><th>Single-Codec2 25Hz</th><th>Single-Codec2 12.5Hz</th><th>FocalCodec</th><th>DAC(RVQ)</th><th>Single-Codec</th><th>TadiCodec w. text</th></tr>
+        <tr>
+        <td><audio controls><source src="demos/codec2_GT/celeb_zh_yuchengdong.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_25hz/celeb_zh_yuchengdong.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_12_5hz/celeb_zh_yuchengdong.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_focalcodec/celeb_zh_yuchengdong.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_dac/celeb_zh_yuchengdong.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_singlecodec/celeb_zh_yuchengdong.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_taidicodec/celeb_zh_yuchengdong.wav" type="audio/wav"></audio></td></tr>
+        <tr>
+        <td><audio controls><source src="demos/codec2_GT/celeb_zh_luoyonghao_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_25hz/celeb_zh_luoyonghao_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_12_5hz/celeb_zh_luoyonghao_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_focalcodec/celeb_zh_luoyonghao_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_dac/celeb_zh_luoyonghao_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_singlecodec/celeb_zh_luoyonghao_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_taidicodec/celeb_zh_luoyonghao_2.wav" type="audio/wav"></audio></td></tr>
+        <tr>
+        <td><audio controls><source src="demos/codec2_GT/celeb_en_jobs_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_25hz/celeb_en_jobs_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_12_5hz/celeb_en_jobs_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_focalcodec/celeb_en_jobs_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_dac/celeb_en_jobs_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_singlecodec/celeb_en_jobs_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_taidicodec/celeb_en_jobs_2.wav" type="audio/wav"></audio></td></tr>
+        <tr>
+        <td><audio controls><source src="demos/codec2_GT/acg_zh_houyi.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_25hz/acg_zh_houyi.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_12_5hz/acg_zh_houyi.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_focalcodec/acg_zh_houyi.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_dac/acg_zh_houyi.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_singlecodec/acg_zh_houyi.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_taidicodec/acg_zh_houyi.wav" type="audio/wav"></audio></td></tr>
+        <tr>
+        <td><audio controls><source src="demos/codec2_GT/dialet_sh_male.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_25hz/dialet_sh_male.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_12_5hz/dialet_sh_male.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_focalcodec/dialet_sh_male.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_dac/dialet_sh_male.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_singlecodec/dialet_sh_male.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_taidicodec/dialet_sh_male.wav" type="audio/wav"></audio></td></tr>
+        <tr>
+        <td><audio controls><source src="demos/codec2_GT/en_child_1.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_25hz/en_child_1.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_12_5hz/en_child_1.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_focalcodec/en_child_1.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_dac/en_child_1.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_singlecodec/en_child_1.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_taidicodec/en_child_1.wav" type="audio/wav"></audio></td></tr>
+        <tr>
+      </table>
+
+      
+      <h2 id="TTS">4. Audio Samples:Zero-shot TTS based on different codecs <a name="TTS"></a></h2>
+      <table>
+        <tr>
+        <th>Prompt Audio</th><th>Target Text</th><th>Single-Codec2 25Hz</th><th>Single-Codec2 12.5Hz</th><th>Single-Codec2 12.Hz wo. Re-codebook</th><th>Single-Codec</th><th>TadiCodec</th></tr>
+        <tr>
+        <td><audio controls><source src="demos/tts_prompt2/00004525-00000003.wav" type="audio/wav"></audio></td><td>年轻的母鸭说，离我的孩子远点，你这丑东西。</td><td></td><td><audio controls><source src="demos/tts_codec2_12_5/00004525-00000019.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/tts_codec2_recodebook_12_5/00004525-00000019.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_focalcodec/celeb_zh_yuchengdong.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_dac/celeb_zh_yuchengdong.wav" type="audio/wav"></audio></td></tr>
+        <tr>
+        <td><audio controls><source src="demos/tts_prompt2/00004585-00000091.wav" type="audio/wav"></audio></td><td>二零零零年的时候女人，可能会被派往月球去寻找月球人。</td><td></td><td><audio controls><source src="demos/tts_codec2_12_5/00004585-00000062.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/tts_codec2_recodebook_12_5/00004585-00000062.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_focalcodec/celeb_zh_luoyonghao_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_dac/celeb_zh_luoyonghao_2.wav" type="audio/wav"></audio></td></tr>
+        <tr>
+        <td><audio controls><source src="demos/tts_prompt2/00004586-00000090.wav" type="audio/wav"></audio></td><td>这姐们用羊毛养出了一整个萌宠动物园。</td><td></td><td><audio controls><source src="demos/tts_codec2_12_5/00004586-00000110.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/tts_codec2_recodebook_12_5/00004586-00000110.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_focalcodec/celeb_en_jobs_2.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_dac/celeb_en_jobs_2.wav" type="audio/wav"></audio></td></tr>
+        <tr>
+        <td><audio controls><source src="demos/tts_prompt2/00004601-00000061.wav" type="audio/wav"></audio></td><td>可以看到具有漂浮感的大型艺术装置，及绚丽多彩的光影效果。</td><td></td><td><audio controls><source src="demos/tts_codec2_12_5/00004601-00000090.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/tts_codec2_recodebook_12_5/00004601-00000090.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_focalcodec/acg_zh_houyi.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_dac/acg_zh_houyi.wav" type="audio/wav"></audio></td></tr>
+        <tr>
+        <td><audio controls><source src="demos/tts_prompt2/00004632-00000030.wav" type="audio/wav"></audio></td><td>我想拿一个大袋子，然后各种口味买一些。</td><td></td><td><audio controls><source src="demos/tts_codec2_12_5/00004632-00000090.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/tts_codec2_recodebook_12_5/00004632-00000090.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_focalcodec/dialet_sh_male.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_dac/dialet_sh_male.wav" type="audio/wav"></audio></td></tr>
+        <tr>
+        <td><audio controls><source src="demos/tts_prompt2/common_voice_en_33907.wav" type="audio/wav"></audio></td><td>The black dog is wearing a blue jacket and playing with a toy.</td><td></td><td><audio controls><source src="demos/tts_codec2_12_5/common_voice_en_33907-common_voice_en_33906.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/tts_codec2_recodebook_12_5/common_voice_en_33907-common_voice_en_33906.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_focalcodec/en_child_1.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_dac/en_child_1.wav" type="audio/wav"></audio></td></tr>
+        <tr>
+        <td><audio controls><source src="demos/tts_prompt2/common_voice_en_541573.wav" type="audio/wav"></audio></td><td>There the flood mark is ten inches.</td><td></td><td><audio controls><source src="demos/tts_codec2_12_5/common_voice_en_541573-common_voice_en_541571.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/tts_codec2_recodebook_12_5/common_voice_en_541573-common_voice_en_541571.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_focalcodec/en_child_1.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_dac/en_child_1.wav" type="audio/wav"></audio></td></tr>
+        <tr>
+        <td><audio controls><source src="demos/tts_prompt2/common_voice_en_563060.wav" type="audio/wav"></audio></td><td>There was no way for everybody to know about alchemy.</td><td></td><td><audio controls><source src="demos/tts_codec2_12_5/common_voice_en_563060-common_voice_en_563063.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/tts_codec2_recodebook_12_5/common_voice_en_563060-common_voice_en_563063.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_focalcodec/en_child_1.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_dac/en_child_1.wav" type="audio/wav"></audio></td></tr>
+        <tr>
+        <td><audio controls><source src="demos/tts_prompt2/common_voice_en_699384.wav" type="audio/wav"></audio></td><td>Of course, the two were unable to do anything.</td><td></td><td><audio controls><source src="demos/tts_codec2_12_5/common_voice_en_699384-common_voice_en_699385.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/tts_codec2_recodebook_12_5/common_voice_en_699384-common_voice_en_699385.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_focalcodec/en_child_1.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_dac/en_child_1.wav" type="audio/wav"></audio></td></tr>
+        <tr>
+        <td><audio controls><source src="demos/tts_prompt2/common_voice_en_2072999.wav" type="audio/wav"></audio></td><td>Two physicists pondered their revised quantum field theory together.</td><td></td><td><audio controls><source src="demos/tts_codec2_12_5/common_voice_en_2072999-common_voice_en_2073000.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/tts_codec2_recodebook_12_5/common_voice_en_2072999-common_voice_en_2073000.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_focalcodec/en_child_1.wav" type="audio/wav"></audio></td><td><audio controls><source src="demos/codec2_dac/en_child_1.wav" type="audio/wav"></audio></td></tr>
+        <tr>
+      </table>
+        
+    <footer class="site-footer">
+
+      <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com/">GitHub
+          Pages</a>.</span>
+    </footer>
+  </section>
+</body>
+
+</html>
